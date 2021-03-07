@@ -7,10 +7,10 @@ Credit to https://github.com/w3rs/kdftool which this tool is based on.
 
 ## Building
 
-This project uses cargo for building (which creates development builds by default):
+This project uses cargo for building (which creates development builds by default) and please run `fmt` as well:
 
 ```shell
-cargo build
+cargo fmt build
 ```
 
 To create release builds use:

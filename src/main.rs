@@ -1,13 +1,13 @@
 extern crate base64;
+extern crate bip39;
 extern crate crypto;
 extern crate regex;
-extern crate bip39;
 
 #[macro_use]
 extern crate clap;
 
-use bip39::{Mnemonic, Language};
-use clap::{Arg, App, ArgMatches};
+use bip39::{Language, Mnemonic};
+use clap::{App, Arg, ArgMatches};
 use crypto::scrypt;
 use regex::Regex;
 use std::io;
@@ -30,7 +30,9 @@ fn arg_matches<'a>() -> ArgMatches<'a> {
 
 fn subcommand_dispatch(app_m: ArgMatches) {
     let mut input = String::new();
-    io::stdin().read_line(&mut input).expect("Failed to read passphrase");
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read passphrase");
     let pass = normalize_passphrase(&input);
     let salt = app_m.value_of("salt").unwrap().to_string();
     println!("Salt: \"{}\"", &salt);
@@ -43,23 +45,28 @@ fn main() {
 }
 
 struct Params {
-    log_n : u8,
-    r : u32,
-    p : u32,
-    dk_len : usize,
+    log_n: u8,
+    r: u32,
+    p: u32,
+    dk_len: usize,
 }
 
 impl Params {
-    fn from_matches(matches : &ArgMatches) -> Params {
+    fn from_matches(matches: &ArgMatches) -> Params {
         let log_n = value_t!(matches, "logN", u8).unwrap_or_else(|e| e.exit());
         let r = value_t!(matches, "r", u32).unwrap_or_else(|e| e.exit());
         let p = value_t!(matches, "p", u32).unwrap_or_else(|e| e.exit());
         let dk_len = value_t!(matches, "len", usize).unwrap_or_else(|e| e.exit());
-        Params { log_n : log_n, r : r, p : p, dk_len: dk_len }
+        Params {
+            log_n: log_n,
+            r: r,
+            p: p,
+            dk_len: dk_len,
+        }
     }
 }
 
-fn derive_key(params : Params, pass : &str, salt: &str) -> Vec<u8> {
+fn derive_key(params: Params, pass: &str, salt: &str) -> Vec<u8> {
     let mut dk = vec![0; params.dk_len];
     let scrypt_params = scrypt::ScryptParams::new(params.log_n, params.r, params.p);
     scrypt::scrypt(pass.as_bytes(), salt.as_bytes(), &scrypt_params, &mut dk);
@@ -77,7 +84,7 @@ fn run_scrypt(app_m: &ArgMatches, pass: &str, salt: &str) {
 
 // Utils
 
-fn normalize_passphrase(input : &str) -> String {
+fn normalize_passphrase(input: &str) -> String {
     let re = Regex::new(r"\s+").unwrap();
     re.replace_all(input, " ").trim().to_owned()
 }
