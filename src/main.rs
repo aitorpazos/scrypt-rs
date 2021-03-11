@@ -58,10 +58,10 @@ impl Params {
         let p = value_t!(matches, "p", u32).unwrap_or_else(|e| e.exit());
         let dk_len = value_t!(matches, "len", usize).unwrap_or_else(|e| e.exit());
         Params {
-            log_n: log_n,
-            r: r,
-            p: p,
-            dk_len: dk_len,
+            log_n,
+            r,
+            p,
+            dk_len,
         }
     }
 }
@@ -94,5 +94,5 @@ fn print_hex(prefix: &str, bytes: &[u8]) {
     for b in bytes.iter() {
         print!("{:x}", b);
     }
-    println!("");
+    println!("\n");
 }
