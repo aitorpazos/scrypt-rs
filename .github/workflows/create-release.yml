@@ -19,7 +19,7 @@ jobs:
       - name: Build release
         uses: icepuma/rust-action@master
         with:
-          args: cargo fmt -- --check && cargo clippy -- -Dwarnings && cargo test && cargo build --release
+          args: cargo fmt -- --check && cargo clippy -- -Dwarnings && cargo doc && cargo test && cargo build --release
       - name: Package release
         run: cd target/release && tar -cvf ../../scrypt-rs-amd64.tar.gz scrypt-rs 
       - name: Create Release
