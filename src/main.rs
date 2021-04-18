@@ -7,7 +7,7 @@ extern crate regex;
 #[macro_use]
 extern crate clap;
 
-use bip39::{Language, Mnemonic};
+use bip39::Mnemonic;
 use clap::{App, Arg, ArgMatches};
 use crypto::scrypt;
 use regex::Regex;
@@ -112,10 +112,10 @@ fn full_output(dk: Vec<u8>, pass: &str, salt: &str, params: Params) {
         "Output| Scrypt derived key in base64: {}",
         base64::encode(&dk)
     );
-    match Mnemonic::from_entropy(&dk, Language::English) {
+    match Mnemonic::from_entropy(&dk) {
         Ok(mnemonic) => println!(
             "Output| Scrypt BIP39 words list representation: {}",
-            mnemonic.phrase()
+            mnemonic.to_string()
         ),
         Err(_) => println!("Output| Scrypt BIP39: Unable to generate words list"),
     };
@@ -127,4 +127,24 @@ fn full_output(dk: Vec<u8>, pass: &str, salt: &str, params: Params) {
 fn normalize_passphrase(input: &str) -> String {
     let re = Regex::new(r"\s+").unwrap();
     re.replace_all(input, " ").trim().to_owned()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn derive_key_test() {
+        let secret = "test secret";
+        let passphrase = "test passphrase";
+        let params = Params {
+            short: true,
+            dk_len: 16,
+            log_n: 9,
+            p: 2,
+            r: 8,
+        };
+        let response = hex::encode(derive_key(&params, secret, passphrase));
+        assert_eq!("f9b9450a44c185a5f7ef0ba3f19e2943", response);
+    }
 }

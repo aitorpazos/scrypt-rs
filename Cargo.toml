@@ -1,11 +1,11 @@
 [package]
 name = "scrypt-rs"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Aitor Pazos <mail@aitorpazos.es>"]
 
 [dependencies]
 base64 = "0.13"
-bip39 = "0.6.0-beta.1"
+bip39 = "1.0.1"
 clap = "2.31"
 hex = "0.4"
 regex = "1.4"
