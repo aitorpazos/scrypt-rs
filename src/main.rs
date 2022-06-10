@@ -115,7 +115,7 @@ fn full_output(dk: Vec<u8>, pass: &str, salt: &str, params: Params) {
     match Mnemonic::from_entropy(&dk) {
         Ok(mnemonic) => println!(
             "Output| Scrypt BIP39 words list representation: {}",
-            mnemonic.to_string()
+            mnemonic
         ),
         Err(_) => println!("Output| Scrypt BIP39: Unable to generate words list"),
     };
