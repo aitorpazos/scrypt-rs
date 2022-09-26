@@ -14,20 +14,20 @@ use regex::Regex;
 use std::io;
 
 /// Defines command line arguments
-fn arg_matches<'a>() -> ArgMatches<'a> {
+fn arg_matches<'a>() -> ArgMatches {
     App::new("scrypt-rs")
         .about("Read passphrase (first line from stdin), normalize it (drop extra whitespace) and pass it to scrypt")
-        .arg(Arg::with_name("short").short("S").long("short").takes_value(false)
+        .arg(Arg::with_name("short").short('S').long("short").takes_value(false)
             .help("Return hex encoded scrypt derivated key"))
-        .arg(Arg::with_name("salt").short("s").long("salt").takes_value(true).default_value("")
+        .arg(Arg::with_name("salt").short('s').long("salt").takes_value(true).default_value("")
             .help("Set salt"))
-        .arg(Arg::with_name("logN").short("L").long("logn").takes_value(true).default_value("19")
+        .arg(Arg::with_name("logN").short('L').long("logn").takes_value(true).default_value("19")
             .help("log₂N (CPU/memory cost) param for scrypt"))
-        .arg(Arg::with_name("r").short("r").takes_value(true).default_value("8")
+        .arg(Arg::with_name("r").short('r').takes_value(true).default_value("8")
             .help("r (blocksize) param for scrypt"))
-        .arg(Arg::with_name("p").short("p").takes_value(true).default_value("2")
+        .arg(Arg::with_name("p").short('p').takes_value(true).default_value("2")
             .help("p (parallelization) param for scrypt"))
-        .arg(Arg::with_name("len").short("l").long("len").takes_value(true).default_value("16")
+        .arg(Arg::with_name("len").short('l').long("len").takes_value(true).default_value("16")
             .help("Derived key length in bytes"))
         .get_matches()
 }

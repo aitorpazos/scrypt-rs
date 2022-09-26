@@ -6,7 +6,7 @@ authors = ["Aitor Pazos <mail@aitorpazos.es>"]
 [dependencies]
 base64 = "0.13"
 bip39 = "1.0.1"
-clap = "2.31"
+clap = "3.2.22"
 hex = "0.4"
 regex = "1.5"
 rust-crypto = "0.2"
