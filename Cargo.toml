@@ -1,12 +1,23 @@
 [package]
 name = "scrypt-rs"
-version = "0.3.0"
+version = "1.0.0"
+edition = "2021"
 authors = ["Aitor Pazos <mail@aitorpazos.es>"]
+description = "Minimal CLI tool for scrypt key derivation with hex, base64, and BIP39 output"
+license = "GPL-3.0-only"
+repository = "https://github.com/aitorpazos/scrypt-rs"
+readme = "README.md"
+keywords = ["scrypt", "kdf", "bip39", "cryptography"]
+categories = ["command-line-utilities", "cryptography"]
 
 [dependencies]
-base64 = "0.13"
-bip39 = "1.0.1"
-clap = "3.2.22"
+anyhow = "1"
+base64 = "0.22"
+bip39 = "2"
+clap = { version = "4", features = ["derive"] }
 hex = "0.4"
-regex = "1.5"
-rust-crypto = "0.2"
+scrypt = "0.11"
+
+[dev-dependencies]
+assert_cmd = "2"
+predicates = "3"
